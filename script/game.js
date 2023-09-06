@@ -84,27 +84,45 @@ for (var i = 0; i < height; i++) {
     metaTileMap[i] = new Array(width);
 }
 
-
 function game() {
     wipeMetaTileMap();
     var player1 = new Player(16, 16, 100);
 
-    var intervalId = setInterval(function() {
+    function updateGame() {
         if (!isRunning) {
-            clearInterval(intervalId);
-        } else {
-            wipeMetaTileMap();
-            displayString(0,0,"This is a test...", 4);
-            displayString(4,4,"Text!!\nWith Rows?", 8);
-            displayString(20,0,"Vertical Time", 9, 1)
-
-            player1.update(horizontal, vertical, fire);
-            characterMap[player1.y][player1.x] = 2;
-            charColorMap[player1.y][player1.x] = 4;
-
-            renderWorld();
+            return;
         }
-    }, 1000 / 10); // 5 frames per second
+
+        wipeMetaTileMap();
+        displayString(0,0,"This is a test...", 4);
+        displayString(4,4,"Text!!\nWith Rows?", 8);
+        displayString(20,0,"Vertical Time", 9, 1);
+
+        player1.update(horizontal, vertical, fire);
+        characterMap[player1.y][player1.x] = 2;
+        charColorMap[player1.y][player1.x] = 4;
+        renderWorld();
+
+        setTimeout(updateGame, 1000 / 8); // Schedule next update
+    }
+
+    updateGame(); // Start game updates
+}
+
+function game60FPS_Update() {
+    function updateShake() {
+        if (!isRunning) {
+            return;
+        }
+
+        shakeX = getRandomInt(-shakeIntense, shakeIntense);
+        shakeY = getRandomInt(-shakeIntense, shakeIntense);
+        shakeIntense = 64;
+
+        setTimeout(updateShake, 1000 / 60); // Schedule next update
+    }
+
+    updateShake(); // Start shake updates
 }
 
 function displayString(x, y, string, color, maxlength) {

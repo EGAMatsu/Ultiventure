@@ -4,6 +4,11 @@ var tileData;
 var tileColor = 'white';
 var tileIndex = 0;
 
+var shakeX = 0;
+var shakeY = 0;
+
+var shakeIntense = 32;
+
 function getTileIndex(column, row) {
     return row * 16 + column;
 }
@@ -60,6 +65,8 @@ function placeTile(x, y, color, index) {
     if (existingTile) {
         // Update the existing tile's properties
         existingTile.style.backgroundPosition = '-' + tileX + 'px -' + tileY + 'px';
+        existingTile.style.left = (x + shakeX) + 'px';
+        existingTile.style.top = (y + shakeY) + 'px';
         
         existingTile.style.backgroundColor = tileColor;
         if ('CSS' in window && CSS.supports('mix-blend-mode', 'multiply')) {
@@ -76,8 +83,8 @@ function placeTile(x, y, color, index) {
         tile.setAttribute('data-y', y);
         var offsetXX = 0;
         var offsetYY = 0;
-        tile.style.left = (x - offsetXX) + 'px';
-        tile.style.top = (y - offsetYY) + 'px';
+        tile.style.left = ((x - offsetXX) + shakeX) + 'px';
+        tile.style.top = ((y - offsetYY) + shakeY) + 'px';
         tile.style.backgroundImage = 'url(images/tileset.gif)';
         tile.style.backgroundPosition = '-' + tileX + 'px -' + tileY + 'px';
         tile.style.backgroundColor = tileColor;
