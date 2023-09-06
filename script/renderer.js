@@ -33,9 +33,7 @@ function plotTiles() {
 
 function placeTile(x, y, color, index) {
     tileColor = '#' + color.toString(16);
-    while (tileColor.length < 7) {
-        tileColor = '#0' + tileColor.slice(1);
-    }
+    tileColor = padStart(tileColor,7,'0');
     tileIndex = index;
     var tileX = (tileIndex % 16) * 8;
     var tileY = Math.floor(tileIndex / 16) * 8;
@@ -51,7 +49,7 @@ function placeTile(x, y, color, index) {
 
     // Check if a tile already exists at the given position
     var existingTile;
-    var tiles = window.getElementsByClassName('tile');
+    var tiles = getElementsByClassName('tile');
     for (var i = tiles.length -1; i >=0; i--) {
         if (tiles[i].getAttribute('data-x') == x && tiles[i].getAttribute('data-y') == y) {
             existingTile = tiles[i];
