@@ -21,15 +21,17 @@ img.onload = function() {
     plotTiles();
 }
 
+var tiles = {};
+
 function plotTiles() {
     tileset.innerHTML = '';
     for (var y = 0; y < 200 / 8; y++) {
         for (var x = 0; x < 320 / 8; x++) {
-            placeTile(x, y, getCol16(0), getTileIndex(x,y));
+            placeTile(x, y, getCol16(0), 32);
         }
     }
+    placeTile(0, 0, getCol16(4), 0);
 }
-
 
 function placeTile(x, y, color, index) {
     tileColor = '#' + color.toString(16);
@@ -48,14 +50,7 @@ function placeTile(x, y, color, index) {
     }
 
     // Check if a tile already exists at the given position
-    var existingTile;
-    var tiles = getElementsByClassName('tile');
-    for (var i = tiles.length -1; i >=0; i--) {
-        if (tiles[i].getAttribute('data-x') == x && tiles[i].getAttribute('data-y') == y) {
-            existingTile = tiles[i];
-            break;
-        }
-    }
+    var existingTile = tiles[x + ',' + y];
     
     if (existingTile) {
         // Update the existing tile's properties
@@ -85,10 +80,12 @@ function placeTile(x, y, color, index) {
             tile.style.imageRendering = 'pixelated'; // Add this line
         }
         
+        tiles[x + ',' + y] = tile;
         
         tileset.appendChild(tile);
     }
 }
+
 
 window.getTileIndex = getTileIndex;
 window.getCol16 = getCol16;

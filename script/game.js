@@ -39,7 +39,7 @@ function game() {
             wipeMetaTileMap();
             renderWorld();
         }
-    }, 1000 / 120); // 60 frames per second
+    }, 1000 / 5); // 5 frames per second
 }
 
 function wipeMetaTileMap() {
