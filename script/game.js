@@ -2,6 +2,61 @@ var width = 40;
 var height = 25;
 var isRunning = true;
 
+//Axis
+var horizontal = 0;
+var vertical = 0;
+var fire = false;
+
+//Keyboard stuffs
+document.onkeydown = function(event) {
+    var key = String.fromCharCode(event.keyCode);
+    //console.log(key)
+    switch(key) {
+        case("W"):
+            vertical = -1;
+            break;
+
+        case("S"):
+            vertical = 1;
+            break;
+
+        case("A"):
+            horizontal = -1;
+            break;
+        case("D"):
+            horizontal = 1;
+            break;
+
+        case(String.fromCharCode(13)):
+            fire = true;
+            break;
+    }
+};
+
+document.onkeyup = function(event) {
+    var key = String.fromCharCode(event.keyCode);
+    switch(key) {
+        case("W"):
+            vertical = 0;
+            break;
+
+        case("S"):
+            vertical = 0;
+            break;
+
+        case("A"):
+            horizontal = 0;
+            break;
+        case("D"):
+            horizontal = 0;
+            break;
+
+        case(String.fromCharCode(13)):
+            fire = false;
+            break;
+    }
+};
+
 //Create the character/tile map
 var characterMap = new Array(height);
 for (var i = 0; i < height; i++) {
@@ -29,8 +84,10 @@ for (var i = 0; i < height; i++) {
     metaTileMap[i] = new Array(width);
 }
 
+
 function game() {
     wipeMetaTileMap();
+    var player1 = new Player(16, 16, 100);
 
     var intervalId = setInterval(function() {
         if (!isRunning) {
@@ -40,9 +97,14 @@ function game() {
             displayString(0,0,"This is a test...", 4);
             displayString(4,4,"Text!!\nWith Rows?", 8);
             displayString(20,0,"Vertical Time", 9, 1)
+
+            player1.update(horizontal, vertical, fire);
+            characterMap[player1.y][player1.x] = 2;
+            charColorMap[player1.y][player1.x] = 4;
+
             renderWorld();
         }
-    }, 1000 / 5); // 5 frames per second
+    }, 1000 / 10); // 5 frames per second
 }
 
 function displayString(x, y, string, color, maxlength) {
@@ -78,14 +140,14 @@ function wipeMetaTileMap() {
     for (var i = 0; i < characterMap.length; i++) { //8x8 tiles
 
         for (var j = 0; j < characterMap[i].length; j++) {
-            characterMap[i][j] = getRandomInt(250,252);
+            characterMap[i][j] = getRandomInt(249,253); //This is a placeholder to verify that the tiles are working
         }
     }    
 
     for (var i = 0; i < charColorMap.length; i++) { //Color cells
 
         for (var j = 0; j < charColorMap[i].length; j++) {
-            charColorMap[i][j] = ((getRandomInt(0,14) >= 8) ? 10 : 11);
+            charColorMap[i][j] = ((getRandomInt(0,14) >= 8) ? 10 : 11); //Ditto as above
         }
 
     }   
@@ -101,7 +163,7 @@ function wipeMetaTileMap() {
 
 function renderWorld() {
     for (var i = 0; i < characterMap.length; i++) { //8x8 tiles
-
+        
         for (var j = 0; j < characterMap[i].length; j++) {
 
             if (charMapOld[i][j] != characterMap[i][j]) {

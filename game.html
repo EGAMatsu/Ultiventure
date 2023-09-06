@@ -13,12 +13,22 @@
             align-items: center;
             height: 100vh;
         }
+        #backgrnd {
+            width: 320px;
+            height: 200px;
+            position: absolute;
+            transform: scale(3);
+            transform-origin: center;
+            background-color: black;
+            z-index: 1;
+        }
         #tileset {
             width: 320px;
             height: 200px;
-            position: relative;
+            position: absolute;
             transform: scale(3);
             transform-origin: center;
+            z-index: 2;
         }
         .tile {
             width: 8px;
@@ -33,11 +43,13 @@
     </style>
 </head>
 <body>
+    <div id="backgrnd"></div>
     <div id="tileset"></div>
 
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"> </script>
     <script src = "script/api/legacySupport.js"> </script>
     <script src = "script/renderer.js"> </script>
+    <script src = "script/player.js"> </script>
     <script src = "script/game.js"> </script>
     <script>
         window.onload = function() {

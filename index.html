@@ -4,7 +4,6 @@
     <title>Ultiventure</title>
     <style>
         body {
-            background-color: black;
             margin: 0;
             overflow: hidden;
             font-family: Arial, sans-serif;
@@ -29,8 +28,25 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            color: white;
+            color: rgb(109, 129, 138);
             text-align: center;
+        }
+        #open-in-new-tab {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #4f65ac;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #open-in-new-tab:hover {
+            color: rgb(216, 216, 216);
+            background-color: #2b1ea3;
         }
     </style>    
 </head>
@@ -39,6 +55,9 @@
         <iframe src="game.html" frameborder="0" scrolling="no"></iframe>
     </div>  
     <p>This game requires Javascript to be played.</p>
+    <p>
+        <a id="open-in-new-tab" href="game.html" target="_blank">Not rendering correctly?<br>Click here to open the game window in a new tab.</a>
+    </p>
     <script>
         var container = document.getElementById('container');
         var aspectRatio = container.offsetWidth / container.offsetHeight;
