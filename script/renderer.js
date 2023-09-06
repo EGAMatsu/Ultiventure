@@ -74,8 +74,8 @@ function placeTile(x, y, color, index) {
         tile.className = 'tile';
         tile.setAttribute('data-x', x);
         tile.setAttribute('data-y', y);
-        tile.style.left = x + 'px';
-        tile.style.top = y + 'px';
+        tile.style.left = (x - 8) + 'px';
+        tile.style.top = (y - 8) + 'px';
         tile.style.backgroundImage = 'url(images/tileset.gif)';
         tile.style.backgroundPosition = '-' + tileX + 'px -' + tileY + 'px';
         tile.style.backgroundColor = tileColor;

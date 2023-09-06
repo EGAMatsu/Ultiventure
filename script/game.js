@@ -46,15 +46,15 @@ function game() {
 }
 
 function displayString(x, y, string, color, maxlength) {
-    let currentX = x;
-    let currentY = y;
-    for (let i = 0; i < string.length; i++) {
+    var currentX = x;
+    var currentY = y;
+    for (var i = 0; i < string.length; i++) {
         if (string[i] != '\n') {
-            let charValue = charToValue(string[i]);
+            var charValue = charToValue(string[i]);
             characterMap[currentY][currentX] = charValue;
             charColorMap[currentY][currentX] = color;
             currentX++;
-        } else {
+        } else { //New line
             currentY++;
             currentX = x;
         }
@@ -68,38 +68,49 @@ function displayString(x, y, string, color, maxlength) {
 
 function wipeMetaTileMap() {
     for (var i = 0; i < charMapOld.length; i++) { //8x8 tiles
+
         for (var j = 0; j < charMapOld[i].length; j++) {
             charMapOld[i][j] = 0;
         }
+
     }    
     
     for (var i = 0; i < characterMap.length; i++) { //8x8 tiles
+
         for (var j = 0; j < characterMap[i].length; j++) {
             characterMap[i][j] = getRandomInt(250,252);
         }
     }    
 
     for (var i = 0; i < charColorMap.length; i++) { //Color cells
+
         for (var j = 0; j < charColorMap[i].length; j++) {
             charColorMap[i][j] = ((getRandomInt(0,14) >= 8) ? 10 : 11);
         }
+
     }   
 
     for (var i = 0; i < metaTileMap.length; i++) { //16x metatiles.
+
         for (var j = 0; j < metaTileMap[i].length; j++) {
             metaTileMap[i][j] = 0;
         }
+
     }   
 }
 
 function renderWorld() {
     for (var i = 0; i < characterMap.length; i++) { //8x8 tiles
+
         for (var j = 0; j < characterMap[i].length; j++) {
+
             if (charMapOld[i][j] != characterMap[i][j]) {
                 window.placeTile(j,i,window.getCol16(charColorMap[i][j]),characterMap[i][j]);
                 charMapOld[i][j] = characterMap[i][j];
             }
+
         }
+
     }   
 }
 
