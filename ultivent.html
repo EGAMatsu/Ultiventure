@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UltiVenture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #tileset {
+            width: 320px;
+            height: 200px;
+            position: relative;
+            transform: scale(3);
+            transform-origin: center;
+        }
+        .tile {
+            width: 8px;
+            height: 8px;
+            position: absolute;
+        }
+        @media (max-width: 1024px) and (max-height: 768px) {
+            #tileset {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="tileset"></div>
+    <script>
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'script/main.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+</body>
+</html>
