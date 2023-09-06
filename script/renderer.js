@@ -4,39 +4,11 @@ var tileData;
 var tileColor = 'white';
 var tileIndex = 0;
 
-function padStart(str, targetLength, padString) {
-    str = String(str);
-    targetLength = targetLength >> 0;
-    padString = String(padString || ' ');
-    if (str.length > targetLength) {
-        return str;
-    } else {
-        targetLength = targetLength - str.length;
-        if (targetLength > padString.length) {
-            padString += padString.repeat(targetLength / padString.length);
-        }
-        return padString.slice(0, targetLength) + str;
-    }
-}
-
-function getElementsByClassName(className, tagName) {
-    tagName = tagName || '*';
-    var elements = document.getElementsByTagName(tagName);
-    var result = [];
-    for (var i = 0; i < elements.length; i++) {
-        if ((' ' + elements[i].className + ' ').indexOf(' ' + className + ' ') > -1) {
-            result.push(elements[i]);
-        }
-    }
-    return result;
-}
-
-
 function getTileIndex(column, row) {
     return row * 16 + column;
 }
 
-function getColorFromC64Palette(index) {
+function getCol16(index) {
     var c64Palette = [0x000000, 0x626262, 0x898989, 0xadadad, 0xffffff, 0x9f4e44,
         0xcb7e75, 0x6d5412, 0xa1683c, 0xc9d487, 0x9ae29b, 0x5cab5e,
         0x6abfc6, 0x887ecb, 0x50459b, 0xa057a3];
@@ -53,7 +25,7 @@ function plotTiles() {
     tileset.innerHTML = '';
     for (var y = 0; y < 200 / 8; y++) {
         for (var x = 0; x < 320 / 8; x++) {
-            placeTile(x, y, getColorFromC64Palette(x + y), getTileIndex(x,y));
+            placeTile(x, y, getCol16(0), getTileIndex(x,y));
         }
     }
 }
@@ -79,7 +51,7 @@ function placeTile(x, y, color, index) {
 
     // Check if a tile already exists at the given position
     var existingTile;
-    var tiles = getElementsByClassName('tile');
+    var tiles = window.getElementsByClassName('tile');
     for (var i = tiles.length -1; i >=0; i--) {
         if (tiles[i].getAttribute('data-x') == x && tiles[i].getAttribute('data-y') == y) {
             existingTile = tiles[i];
@@ -94,7 +66,7 @@ function placeTile(x, y, color, index) {
         existingTile.style.backgroundColor = tileColor;
         if ('CSS' in window && CSS.supports('mix-blend-mode', 'multiply')) {
             existingTile.style.mixBlendMode = 'multiply';
-            tile.style.imageRendering = 'pixelated'; // Add this line
+            //tile.style.imageRendering = 'pixelated'; // Add this line
         }
         
 
@@ -119,3 +91,8 @@ function placeTile(x, y, color, index) {
         tileset.appendChild(tile);
     }
 }
+
+window.getTileIndex = getTileIndex;
+window.getCol16 = getCol16;
+window.plotTiles = plotTiles;
+window.placeTile = placeTile;
