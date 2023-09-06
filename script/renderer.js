@@ -15,6 +15,11 @@ function getCol16(index) {
     return c64Palette[index % 16];
 }
 
+function charToValue(char) {
+    const charOrder = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[[]]] !\"#$%&'()*+,-./0123456789:;<=>?";
+    return charOrder.indexOf(char.toUpperCase());
+}
+
 img.src = 'images/tileset.gif';
 img.flags = 0
 img.onload = function() {
@@ -91,3 +96,4 @@ window.getTileIndex = getTileIndex;
 window.getCol16 = getCol16;
 window.plotTiles = plotTiles;
 window.placeTile = placeTile;
+window.charToValue = charToValue;

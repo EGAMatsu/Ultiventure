@@ -37,10 +37,34 @@ function game() {
             clearInterval(intervalId);
         } else {
             wipeMetaTileMap();
+            displayString(0,0,"This is a test...", 4);
+            displayString(4,4,"Text!!\nWith Rows?", 8);
+            displayString(20,0,"Vertical Time", 9, 1)
             renderWorld();
         }
     }, 1000 / 5); // 5 frames per second
 }
+
+function displayString(x, y, string, color, maxlength) {
+    let currentX = x;
+    let currentY = y;
+    for (let i = 0; i < string.length; i++) {
+        if (string[i] != '\n') {
+            let charValue = charToValue(string[i]);
+            characterMap[currentY][currentX] = charValue;
+            charColorMap[currentY][currentX] = color;
+            currentX++;
+        } else {
+            currentY++;
+            currentX = x;
+        }
+        if (currentX - x >= maxlength) {
+            currentX = x;
+            currentY++;
+        }
+    }
+}
+
 
 function wipeMetaTileMap() {
     for (var i = 0; i < charMapOld.length; i++) { //8x8 tiles
@@ -80,3 +104,4 @@ function renderWorld() {
 }
 
 window.game = game;
+window.displayString = displayString;
